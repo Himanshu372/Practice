@@ -490,9 +490,31 @@ class Queue():
             return element
 
 
+class patternMatchingAlgo(object):
 
+    def __init__(self, string, substring):
+        '''
+        A class implementating pattern matching algorithms. For instanstiating, a substring and a string is required
+        :param string:
+        :param substring:
+        '''
+        self.string = string
+        self.substring = substring
+        self.n = len(string)
+        self.m = len(substring)
 
-
+    def brute_force_match(self):
+        '''
+        Return the lowest index of string where the substring begins or -1
+        :return:
+        '''
+        for i in range(self.n - self.m + 1):
+            k = 0
+            while k < self.m and self.string[i + k] == self.substring[k]:
+                k += 1
+                if k == self.m:
+                    return i
+        return -1
 
 
 
@@ -502,6 +524,8 @@ class Queue():
 
 
 if __name__=='__main__':
+    obj = patternMatchingAlgo('Himanshu', 'man')
+    print(obj.brute_force_match())
     # print('Start')
     # k = 'sddasd 10 sdsd 30.4 sdsdsad '
     #
@@ -746,7 +770,7 @@ if __name__=='__main__':
                     l[j - 1] = temp
         return l
 
-    print(insertion_sort(l))
+    # print(insertion_sort(l))
 
     # def merge(a, b):
     #     c = []
