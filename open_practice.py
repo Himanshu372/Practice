@@ -394,7 +394,7 @@ class Graph():
 
 
 # Implementating Depth First Search
-class Vertex():
+class Vertex(object):
     def __init__(self, name):
         self.name = name
         self.color = 'black'
@@ -409,7 +409,7 @@ class Vertex():
 
 
 
-class Graph():
+class Graph(object):
     def __init__(self):
         self.vertices = {}
         time = 0
@@ -459,7 +459,7 @@ class Graph():
 
 
 
-class Stack():
+class Stack(object):
     def __init__(self):
         self.list = []
 
@@ -475,7 +475,7 @@ class Stack():
         print(self.list)
 
 
-class Queue():
+class Queue(object):
     def __init__(self):
         self.entryStack = Stack()
         self.exitStack = Stack()
@@ -491,23 +491,26 @@ class Queue():
 
 
 class patternMatchingAlgo(object):
+    """
+    A class implementating pattern matching algorithms.
+    """
 
     def __init__(self, string, substring):
-        '''
-        A class implementating pattern matching algorithms. For instanstiating, a substring and a string is required
+        """
+         For instanstiating, a substring and a string is required
         :param string:
         :param substring:
-        '''
+        """
         self.string = string
         self.substring = substring
         self.n = len(string)
         self.m = len(substring)
 
     def brute_force_match(self):
-        '''
+        """
         Return the lowest index of string where the substring begins or -1
         :return:
-        '''
+        """
         for i in range(self.n - self.m + 1):
             k = 0
             while k < self.m and self.string[i + k] == self.substring[k]:
@@ -516,8 +519,34 @@ class patternMatchingAlgo(object):
                     return i
         return -1
 
+    def boyer_moore_match(self):
+        """
+        Using Boyer-Moore algo to find substring match in string
+        :return:
+        """
+        last = self._gen_dict()
+        i = self.m - 1
+        k = self.m - 1
+        while i < self.n:
+            if self.string[i] == self.substring[k]:
+                if k == 0:
+                    return i
+                else:
+                    i -= 1
+                    k -= 1
+            else:
+                j = last.get(self.string[i], -1)
+                i += self.m - min(k, j + 1)
+                k = self.m - 1
+        return -1
 
 
+    def _gen_dict(self):
+       """
+       An internal method to convert given string to dict
+       :return: 
+       """
+        return {self.substring[i]: i for i in range(self.m)}
 
 
 
@@ -525,7 +554,7 @@ class patternMatchingAlgo(object):
 
 if __name__=='__main__':
     obj = patternMatchingAlgo('Himanshu', 'man')
-    print(obj.brute_force_match())
+    print(obj.boyer_moore_match())
     # print('Start')
     # k = 'sddasd 10 sdsd 30.4 sdsdsad '
     #
