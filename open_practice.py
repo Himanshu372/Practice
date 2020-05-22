@@ -2,7 +2,7 @@ from datetime import datetime, timedelta
 from sys import stdin
 # import pandas as pd
 from copy import copy
-from random import randint
+from random import randint, getrandbits
 from itertools import groupby
 from collections import Counter
 from fractions import Fraction
@@ -13,7 +13,7 @@ from subprocess import PIPE,Popen
 import string
 # import pandas as pd
 import sys
-import time
+import timeit
 import re
 from collections import defaultdict
 
@@ -546,15 +546,15 @@ class patternMatchingAlgo(object):
        An internal method to convert given string to dict
        :return: 
        """
-        return {self.substring[i]: i for i in range(self.m)}
+       return {self.substring[i]: i for i in range(self.m)}
 
 
 
 
 
 if __name__=='__main__':
-    obj = patternMatchingAlgo('Himanshu', 'man')
-    print(obj.boyer_moore_match())
+    # obj = patternMatchingAlgo('Himanshu', 'man')
+    # print(obj.boyer_moore_match())
     # print('Start')
     # k = 'sddasd 10 sdsd 30.4 sdsdsad '
     #
@@ -1466,41 +1466,41 @@ if __name__=='__main__':
 
     # Implementing merge sort to return swaps required.
 
-    class MS:
-        def __init__(self):
-            self.swaps = 0
-
-        def countInversions(self, arr):
-            if len(arr) == 1:
-                return arr
-            else:
-                left, right = self.countInversions(arr[:len(arr) // 2]), self.countInversions(arr[len(arr) // 2:])
-                return self.merge(left, right)
-
-
-        def merge(self, left, right):
-            c = []
-            a_ix, b_ix = 0, 0
-            ll, lr = len(left), len(right)
-
-            while a_ix < len(left) and b_ix < len(right):
-                if left[a_ix] > right[b_ix]:
-                    c.append(right[b_ix])
-                    b_ix += 1
-                    self.swaps += len(left) - a_ix
-                else:
-                    c.append(left[a_ix])
-                    a_ix += 1
-
-            if a_ix == len(left):
-                c.extend(right[b_ix:])
-            else:
-                c.extend(left[a_ix:])
-            return c
-
-    ms = MS()
-    print(ms.countInversions([2, 1, 3, 1, 2]))
-    print(ms.swaps)
+    # class MS:
+    #     def __init__(self):
+    #         self.swaps = 0
+    #
+    #     def countInversions(self, arr):
+    #         if len(arr) == 1:
+    #             return arr
+    #         else:
+    #             left, right = self.countInversions(arr[:len(arr) // 2]), self.countInversions(arr[len(arr) // 2:])
+    #             return self.merge(left, right)
+    #
+    #
+    #     def merge(self, left, right):
+    #         c = []
+    #         a_ix, b_ix = 0, 0
+    #         ll, lr = len(left), len(right)
+    #
+    #         while a_ix < len(left) and b_ix < len(right):
+    #             if left[a_ix] > right[b_ix]:
+    #                 c.append(right[b_ix])
+    #                 b_ix += 1
+    #                 self.swaps += len(left) - a_ix
+    #             else:
+    #                 c.append(left[a_ix])
+    #                 a_ix += 1
+    #
+    #         if a_ix == len(left):
+    #             c.extend(right[b_ix:])
+    #         else:
+    #             c.extend(left[a_ix:])
+    #         return c
+    #
+    # ms = MS()
+    # print(ms.countInversions([2, 1, 3, 1, 2]))
+    # print(ms.swaps)
 
 
     # def maximumToys(prices, k):
@@ -1743,7 +1743,7 @@ if __name__=='__main__':
 
         return count
 
-    print(substrCount(7, 'abcbaba'))
+    # print(substrCount(7, 'abcbaba'))
 
     # def char_list(s, l):
     #     # Dictionary
@@ -1785,8 +1785,8 @@ if __name__=='__main__':
     #     d = []
     #     for i in l:
     #         if i % 10 == 1 and i // 10 > 0:
-    #           d.append(i % 10)
-    #           break
+    #             d.append(i % 10)
+    #             break
     #         elif i // 10 > 0:
     #             d.append(i % 10)
     #         else:
@@ -1799,8 +1799,131 @@ if __name__=='__main__':
     # print(fibonacci_varint(100))
 
 
+    def fib_series(number):
+        """
+        Fib series for sum till n
+        """
+        i = 0
+        j = 1
+        counter = 2
+        while counter < number:
+            tmp = i + j
+            i = j
+            j = tmp
+            counter += 1
+        return j
+
+    def subset_sum_problem(l, sum):
+        result = []
+        d = {}
+        # for i in l:
+        #     for j in l[l.index(i):]:
+        #         if i + j == sum:
+        #             result.append([i, j])
+        for i in l:
+            k = sum - i
+            if k in d.values():
+                result.append([i, k])
+            else:
+                d[getrandbits(128)] = i
+        return result
+
+    start_time = timeit.timeit()
+    print(subset_sum_problem([3, 5, 2, -4, 8, 11], 7))
+    print(timeit.timeit() - start_time)
 
 
+    def max_subarray_sum(array):
+        """
+        No a good approach, time complexity is O(N^2)
+        :param array:
+        :return:
+        """
+        max_sum = 0
+        for i in range(1, len(array) + 1):
+            for j in range(len(array)):
+                a = array[j:j + i]
+                if sum(a) > max_sum:
+                    max_sum = sum(array[j:j + i])
+        return max_sum
+
+
+    def max_subarray_sum_kadane(array):
+        """
+        Implementation of Kadane's algo for 2d array, idea is to find at each index,
+        maximum sum of contiguous subarray, with adding the element at the index with the
+        sum of trailing subarray
+        :param array:
+        :return:
+        """
+        max_sum = current_sum = array[0]
+        for i in range(1, len(array)):
+            current_sum = max(array[i], current_sum + array[i])
+            if max_sum < current_sum:
+                max_sum = current_sum
+        return max_sum
+
+
+    def longest_subsequence(array):
+        """
+        Longest subsequence using dynamic programming
+        An array is used to build up solution from bottom up.
+        Two pointers are used to map positions, one starts from 0 and other at
+        respective index.
+        In array, at each position, count of elements < the element at index is stored.
+        Finally the maximum from the array is returned
+        :param array:
+        :return:
+        """
+        max_length_array = [1] * len(array)
+        for i in range(1, len(array)):
+            for j in range(i):
+                if (array[j] < array[i]) and (max_length_array[i] < (max_length_array[j] + 1)):
+                    max_length_array[i] = max_length_array[j] + 1
+        return max(max_length_array)
+
+
+    array = [-1] * 10
+    def get_min_steps(n):
+        """
+        A technique to find minimum steps which can result in a number `n` being 1.
+        The steps that can be taken include
+        1. Subtracting 1
+        2. Divison by 2
+        3. Division by 3
+        For eg, for n=10, steps required are 3 (10-1 = 9 / 3 = 3 / 3 = 1)
+        This function uses a top down approach with the help of memoization(using array to store results)
+        :param n:
+        :return:
+        """
+        if n == 1:
+            return 0
+        if array[n - 1] != -1:
+            return array[n]
+        r = 1 + get_min_steps(n - 1)
+        if n % 2 == 0:
+            r = min(r, 1 + get_min_steps(n // 2))
+        if n % 3 == 0:
+            r = min(r, 1 + get_min_steps(n // 3))
+        array[n - 1] = r
+        return r
+
+
+    def get_min_steps_dp(num):
+        """
+        This is the same problem as above but solved by bottom up DP approach
+        :param num:
+        :return:
+        """
+        array = [-1] * num
+        array[0] = 0
+        for i in range(2, len(array) + 1):
+            array[i - 1] = 1 + array[i - 2]
+            if i % 2 == 0:
+                array[i - 1] = min(array[i - 1], 1 + array[(i // 2) - 1])
+            if i % 3 == 0:
+                array[i - 1] = min(array[i - 1], 1 + array[(i // 3) - 1])
+        return array[num - 1]
 
 
 
