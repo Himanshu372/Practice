@@ -84,7 +84,7 @@ class linked_list():
 
 class bts_node(object):
     """docstring for bts_node"""
-    def __init__(self, value = None):
+    def __init__(self, value=None):
         super(bts_node, self).__init__()
         self.value = value
         self.left = None
@@ -99,20 +99,20 @@ class binary_tree(object):
 
 
     def insert(self, value):
-        if self.root == None:
+        if self.root is None:
             self.root = bts_node(value)
         else:
             self._insert(value, self.root)
 
     def _insert(self, value, node):
         if value < node.value:
-            if node.left != None:
+            if node.left is not None:
                 self._insert(value, node.left)
             else:
                 node.left = bts_node(value)
                 node.left.parent = node
         elif value > node.value:
-            if node.right != None:
+            if node.right is not None:
                 self._insert(value, node.right)
             else:
                 node.right = bts_node(value)
@@ -140,8 +140,9 @@ class binary_tree(object):
         else:
             return 0
 
-    def _height(self, node, cur_height = 0):
-        if node == None: return cur_height
+    def _height(self, node, cur_height=0):
+        if node is None:
+            return cur_height
         left = self._height(node.left, cur_height + 1)
         right = self._height(node.right, cur_height + 1)
         return max(left, right)
@@ -151,6 +152,7 @@ class binary_tree(object):
             return self._search(value, self.root)
         else:
             return False
+
     def _search(self, value, node):
         if node.value == value:
             return True
@@ -167,6 +169,7 @@ class binary_tree(object):
             return self._find_node(value, self.root)
         else:
             return None
+
     def _find_node(self, value, node):
         if node.value == value:
             return node
@@ -284,7 +287,7 @@ def invert_node(node):
 
 # Implementating graphs
 # Graph with adjaceny list
-class Vertex():
+class Vertex(object):
     def __init__(self, name):
         self.name = name
         self.neighbours = []
@@ -830,17 +833,17 @@ if __name__=='__main__':
 
     # Idea is to define a random pivot for an array and sort elements based on this pivot
     # def quick_sort(a):
-    #     if len(a) <= 1: return a
-    #     piv = randint(0, (len(a) - 1))
-    #     left, center, right = [], [], []
-    #     for i in a:
-    #         if i < a[piv]:
-    #             left.append(i)
-    #         elif i == a[piv]:
-    #             center.append(i)
-    #         else:
-    #             right.append(i)
-    #     return quick_sort(left) + center + quick_sort(right)
+    #     #     if len(a) <= 1: return a
+    #     #     piv = randint(0, (len(a) - 1))
+    #     #     left, center, right = [], [], []
+    #     #     for i in a:
+    #     #         if i < a[piv]:
+    #     #             left.append(i)
+    #     #         elif i == a[piv]:
+    #     #             center.append(i)
+    #     #         else:
+    #     #             right.append(i)
+    #     #     return quick_sort(left) + center + quick_sort(right)
     #
     # print(quick_sort(l))
 
@@ -1652,29 +1655,29 @@ if __name__=='__main__':
 
 
     # An implementation on the lines of DFS(Depth First Search)
-    # def search_islands(m):
-    #     islands = 0
-    #     # visited = [[False for col in range(len(m[0])) for row in len(m)]]
-    #     for row in range(len(m)):
-    #         for col in range(len(m[0])):
-    #             if m[row][col] == 1:
-    #                 islands += 1
-    #                 find_adjacent(m, row, col)
-    #     return islands
-    #
-    # def find_adjacent(m, row, col):
-    #     if row >= len(m) or col >= len(m[0]) or row < 0 or col < 0:
-    #         return None
-    #     if m[row][col] == 0:
-    #         return None
-    #     m[row][col] = 0
-    #
-    #     for i in range(row - 1, row + 2):
-    #         for j in range(col - 1, col + 2):
-    #             if i != row or j != col:
-    #                 find_adjacent(m, i, j)
-    #
-    # print('Islands:' + str(search_islands([[0, 1, 0, 1, 1], [0 ,0, 0, 1, 1], [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]])))
+    def search_islands(m):
+        islands = 0
+        # visited = [[False for col in range(len(m[0])) for row in len(m)]]
+        for row in range(len(m)):
+            for col in range(len(m[0])):
+                if m[row][col] == 1:
+                    islands += 1
+                    find_adjacent(m, row, col)
+        return islands
+
+    def find_adjacent(m, row, col):
+        if row >= len(m) or col >= len(m[0]) or row < 0 or col < 0:
+            return None
+        if m[row][col] == 0:
+            return None
+        m[row][col] = 0
+
+        for i in range(row - 1, row + 2):
+            for j in range(col - 1, col + 2):
+                if i != row or j != col:
+                    find_adjacent(m, i, j)
+
+    print('Islands:' + str(search_islands([[0, 1, 0, 1, 1], [0, 0, 0, 1, 1], [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]])))
 
 
     # def makeAnagram(a, b):
@@ -1850,7 +1853,7 @@ if __name__=='__main__':
 
     def max_subarray_sum_kadane(array):
         """
-        Implementation of Kadane's algo for 2d array, idea is to find at each index,
+        Implementation of Kadane's algo for an array, idea is to find at each index,
         maximum sum of contiguous subarray, with adding the element at the index with the
         sum of trailing subarray
         :param array:
@@ -1868,8 +1871,7 @@ if __name__=='__main__':
         """
         Longest subsequence using dynamic programming
         An array is used to build up solution from bottom up.
-        Two pointers are used to map positions, one starts from 0 and other at
-        respective index.
+        Two pointers are used to map positions, one starts from 0 and other at index 1.
         In array, at each position, count of elements < the element at index is stored.
         Finally the maximum from the array is returned
         :param array:
@@ -1924,6 +1926,7 @@ if __name__=='__main__':
             if i % 3 == 0:
                 array[i - 1] = min(array[i - 1], 1 + array[(i // 3) - 1])
         return array[num - 1]
+
 
 
 
