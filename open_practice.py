@@ -848,6 +848,7 @@ if __name__=='__main__':
     # print(quick_sort(l))
 
     # Helpful when array has repetitive elements
+    # Also not useful in cases where numbers in the list vary too much in size
     # def count_sort(a):
     #     m = max(a)
     #     aux = [0 for i in range(m + 1)]

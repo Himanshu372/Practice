@@ -27,7 +27,7 @@ def decodeHuff(root, s):
             #,5
           0     1
         #,2     A,3
-
+     0      1
     B,1     C,1
 
     """
