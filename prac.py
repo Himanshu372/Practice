@@ -513,17 +513,131 @@ def reverseshufflemerge(S):
         i = min_char_at + 1
     print(''.join(solution))
 
-global d
-d = {}
 def commonChild(s1, s2):
+    """
+    Recursive non memoized solution for longest subsequence problem between 2 strings
+    """
     if len(s1) == 0 or len(s2) == 0:
         return 0
-    if d.get([s1, s2], None):
-        return d[[s1, s2]]
     elif s1[-1] == s2[-1]:
-        d[[s1[-1], s2[-1]]] = 1 + commonChild(s1[:-1], s2[:-1])
+        return 1 + commonChild(s1[:-1], s2[:-1])
     else:
-        d[[s1, s2]] = max(commonChild(s1, s2[:-1]), commonChild(s1[:-1], s2))
+        return max(commonChild(s1, s2[:-1]), commonChild(s1[:-1], s2))
+
+def commonChild_memoized(s1, s2):
+    """
+    Memoized solution for longest subsequence problem
+    1. We create a grid of zeros, using the (length + 1) of s1 and s2(first position for both taken by empty string)
+    2. We iterate through each row,
+        a. When both elements are equal, we add 1 to the element of the grid, which is diagonally above this
+         particular element
+        b. If not equal, we take max from previous row and column
+    3. We fill the whole grid by above rule and the end return the last element of the grid, ie grid[-1][-1]
+
+    ** To make solution more efficient in Python, rather than using grid
+    """
+    m, n = len(s1), len(s2)
+    # grid = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+    prev = [0 for _ in range(n + 1)]
+    for row in range(1, n + 1):
+        curr = [0 for _ in range(n + 1)]
+        for col in range(1, m + 1):
+            if s1[col - 1] == s2[row - 1]:
+                curr[col] = 1 + prev[col - 1]
+            else:
+                curr[col] = max(prev[col], curr[col - 1])
+        prev = curr
+    return curr[-1]
+
+
+
+class MinPathSum():
+
+    def __init__(self, array):
+        self._array = array
+        self._len = len(array)
+
+    def min_path_sum(self):
+        """
+        This function is used for solving problem of minimum path sum in a 2D array. Goal is to get to the bottom right
+        corner, starting from top left with minimum sum of array elements. You can only move right or down at each step.
+        [[1, 3, 2],
+        [4, 3, 1],
+        [5, 6, 1]]
+        Ans is 8
+        """
+        row, col = len(self._array) - 1, len(self._array[0]) - 1
+        result = 0
+        while row > -1 and col > -1:
+            result += self._array[row][col]
+            if row == 0:
+                col -= 1
+            elif col == 0:
+                row -= 1
+            else:
+                top, left = self._array[row - 1][col], self._array[row][col - 1]
+                if top < left:
+                    row -= 1
+                else:
+                    col -= 1
+        return result
+
+    def min_path_sum_dp(self):
+        """
+        The same above problem solved using dp array
+        """
+        rows, cols = len(self._array), len(self._array[0])
+        dp = [[0 for col in range(cols)] for row in range(rows)]
+        for row in range(rows):
+            for col in range(cols):
+                if row == 0 and col == 0:
+                    dp[row][col] = self._array[row][col]
+                else:
+                    top = sys.maxsize if row == 0 else dp[row - 1][col]
+                    left = sys.maxsize if col == 0 else dp[row][col - 1]
+                    dp[row][col] = self._array[row][col] + min(top, left)
+        return dp[rows - 1][cols - 1]
+
+
+class CombinationSum():
+
+    def __init__(self, array, total):
+        self._array = array
+        self._total = total
+        self._mem = {}
+
+    def comb_sum(self, flag):
+        return self.recursion(len(self._array) - 1, self._total) if flag else self.dp_recursion(len(self._array) - 1,
+                                                                                                self._total)
+
+    def recursion(self, i, total):
+        if total == 0:
+            return 1
+        elif total < 0:
+            return 0
+        elif i < 0:
+            return 0
+        elif total < self._array[i]:
+            return self.recursion(i - 1, total)
+        else:
+            return self.recursion(i - 1, total - self._array[i]) + self.recursion(i - 1, total)
+
+    def dp_recursion(self, i, total):
+        key = '{}:{}'.format(total, self._array[i])
+        res = self._mem.get(key, None)
+        if not res:
+            if total == 0:
+                return 1
+            elif total < 0:
+                return 0
+            elif i < 0:
+                return 0
+            elif total < self._array[i]:
+                res = self.dp_recursion(i - 1, total)
+            else:
+                res = self.dp_recursion(i - 1, total - self._array[i]) + self.dp_recursion(i - 1, total)
+        return res
+
 
 
 if __name__=='__main__':
@@ -531,4 +645,8 @@ if __name__=='__main__':
     # print_odd_even(3)
     # print(getMinimumCost(3, [2, 5, 6]))
     # reverseshufflemerge('abcdefgabcdefg')
-    print(commonChild('HARRY', 'SALLY'))
+    # print(commonChild_memoized('SHINCHAN', 'NOHARAAA'))
+    # print(get_odd_subarrays([2, 2, 5, 6, 9, 11, 4, 2], 2))
+    k = CombinationSum([2, 4, 6, 10], 16)
+    print(k.comb_sum(flag=False))
+    print(k.comb_sum(flag=True))
