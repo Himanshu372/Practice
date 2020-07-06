@@ -600,7 +600,16 @@ class MinPathSum():
 
 
 class CombinationSum():
-
+    """
+    This class is used as solution to the problem of finding the number of sub-arrays that sum up to given 'total',
+    for eg. array = [2, 4, 6, 10] and total = 16
+            All the subarrays that sum up to 16 are [6, 10] and [2, 4, 10]
+    Solved using recursion and dp recursion.
+    Idea is to build a recursive function where we, for eg we are considering element 10
+    sum(all the subarrays that sum to 16 including 10, all the subarrays that sum to 16 without 10)
+    We recursively go down until we reduce total to 0(dp[0] = 1) and calculate number required for each number up until
+    we get to the required total.
+    """
     def __init__(self, array, total):
         self._array = array
         self._total = total
@@ -639,6 +648,30 @@ class CombinationSum():
         return res
 
 
+class MinCoins():
+    """
+    This class acts as solution for min coins problem. We need to find min coins that make up the given `target` from
+    given denomination(array) of coins. Once again the idea is same, we calculate the min coins required for each number,
+    until we get to required target.
+    We start from dp[0] = 0,
+    if coin of denomination 1 is present, dp[1] = 1
+    if coin of denomination 2 is present, dp[2] = min(dp[2], dp[2 - 1] + 1(as we will be using coin))
+    """
+    def __init__(self, array, target):
+        self._array = array
+        self._target = target
+        self._dp = [sys.maxsize for _ in range(self._target + 1)]
+        self._dp[0] = 0
+
+    def min_coins_dp(self):
+        for i in range(1, self._target + 1):
+            for num in self._array:
+                if i - num < 0:
+                    break
+                else:
+                    self._dp[i] = min(self._dp[i], self._dp[i - num] + 1)
+        return -1 if self._dp[self._target] >= sys.maxsize else self._dp[self._target]
+
 
 if __name__=='__main__':
     # print_pattern(4)
@@ -647,6 +680,5 @@ if __name__=='__main__':
     # reverseshufflemerge('abcdefgabcdefg')
     # print(commonChild_memoized('SHINCHAN', 'NOHARAAA'))
     # print(get_odd_subarrays([2, 2, 5, 6, 9, 11, 4, 2], 2))
-    k = CombinationSum([2, 4, 6, 10], 16)
-    print(k.comb_sum(flag=False))
-    print(k.comb_sum(flag=True))
+    k = MinCoins([2], 3)
+    print(k.min_coins_dp())
