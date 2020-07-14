@@ -59,13 +59,42 @@ class Minrewardsarray():
             pointer += 1
         return sum(num)
 
+class LongestCommonPalindromicSubsequence:
+    """
+    A variation of LCS problem, here our aim is to find longest common palindromic subsequence
+    Idea is to create a grid with same string in row and column, then compare substring of various lenghts
+    For grid, all the diagnol elements will be filled as 1, as if the string just had a single string, lcps = 1
+    The required algo is
+    if string[i] == string[j]:
+        grid[i][j] = 2 + diagonally opp lower element
+    else:
+        grid[i][j] = max(element to left, element below)
+    return grid[0][lenght of string - 1]
+    ** Important to note is the iteration loop
+    """
+    def __init__(self, s):
+        self._string = s
+        self._len = len(s)
 
-
+    def lcps(self):
+        grid = [[0 for _ in range(self._len)] for _ in range(self._len)]
+        for diag in range(self._len):
+            grid[diag][diag] = 1
+        for curr_len in range(2, self._len + 1):
+            for i in range(self._len - curr_len + 1):
+                j = i + curr_len - 1
+                if self._string[i] == self._string[j]:
+                    grid[i][j] = 2 + grid[i + 1][j - 1]
+                else:
+                    grid[i][j] = max(grid[i][j - 1], grid[i + 1][j])
+        return grid[0][self._len - 1]
 
 
 if __name__ == '__main__':
     # k = MaxArraySumNonAdjacent([-2, 1, 3, -4, 5])
     # print(k.max_array_sum_non_adjacent())
     # print(abbreviation('K', 'KXzQ'))
-    c = Minrewardsarray([2,4,2,6,1,7,8,9,2,1])
-    print(c.min_rewards())
+    # c = Minrewardsarray([2,4,2,6,1,7,8,9,2,1])
+    # print(c.min_rewards())
+    k = LongestCommonPalindromicSubsequence('bebeeed')
+    print(k.lcps())
