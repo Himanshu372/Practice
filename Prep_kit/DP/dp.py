@@ -89,6 +89,45 @@ class LongestCommonPalindromicSubsequence:
                     grid[i][j] = max(grid[i][j - 1], grid[i + 1][j])
         return grid[0][self._len - 1]
 
+class EditDistance:
+    """
+    Class implementating solution for minimum steps required to convert one string to another
+    Distance known as Levenshtein distance.
+    Solved by Recursion and DP.
+    Main idea is
+    if string[row] == string[col]:
+        grid[row][col] = grid[row - 1][col - 1] (Taking the element diagonally above)
+    else:
+        grid[row][col] = 1 + min(grid[row - 1][col], grid[row][col - 1], grid[row - 1][col - 1])
+    Same idea applies to recursion solution
+    """
+    def edit_distance_recursive(self, convert, convert_to):
+        if len(convert) == 0 and len(convert_to) == 0:
+            return len(convert)
+        if len(convert) == 0:
+            return len(convert_to)
+        if len(convert_to) == 0:
+            return len(convert)
+        if convert[0] == convert_to[0]:
+            return self.edit_distance_recursive(convert[1:], convert_to[1:])
+        else:
+            return 1 + min(self.edit_distance_recursive(convert[1:], convert_to),
+                        self.edit_distance_recursive(convert, convert_to[1:]),
+                        self.edit_distance_recursive(convert[1:], convert_to[1:]))
+
+    def edit_distance_dp(self, convert, convert_to):
+        m, n = len(convert), len(convert_to)
+        grid = [[0 for _ in range(n + 1)] for _ in range(m + 1)]
+        grid[0] = [i for i in range(n + 1)]
+        for j in range(m + 1):
+            grid[j][0] = j
+        for row in range(1, m + 1):
+            for col in range(1, n + 1):
+                if convert[row - 1] == convert_to[col - 1]:
+                    grid[row][col] = grid[row - 1][col - 1]
+                else:
+                    grid[row][col] = 1 + min(grid[row - 1][col], grid[row][col - 1], grid[row - 1][col - 1])
+        return grid[m][n]
 
 if __name__ == '__main__':
     # k = MaxArraySumNonAdjacent([-2, 1, 3, -4, 5])
@@ -96,5 +135,7 @@ if __name__ == '__main__':
     # print(abbreviation('K', 'KXzQ'))
     # c = Minrewardsarray([2,4,2,6,1,7,8,9,2,1])
     # print(c.min_rewards())
-    k = LongestCommonPalindromicSubsequence('bebeeed')
-    print(k.lcps())
+    # k = LongestCommonPalindromicSubsequence('bebeeed')
+    # print(k.lcps())
+    o = EditDistance()
+    print(o.edit_distance_dp('Anshuman', 'Antihuman'))
