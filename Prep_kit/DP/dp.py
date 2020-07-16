@@ -129,6 +129,37 @@ class EditDistance:
                     grid[row][col] = 1 + min(grid[row - 1][col], grid[row][col - 1], grid[row - 1][col - 1])
         return grid[m][n]
 
+
+class LongestRepeatingSubsequence:
+    """
+    A variation of LCS problem. Here the main idea is to find,
+    compare a string with its substring and find any recurrence of the same substring.
+    `If the character match, we pick element diagonally above and add 1
+    otherwise we pick the max from the element at top or left`
+    
+    """
+    def __init__(self, string):
+        self._s = string
+        self._len = len(string)
+        self._grid = [[0 for _ in range(self._len + 1)] for _ in range(self._len + 1)]
+
+    def lrs_recursive(self, m, n):
+        if m == 0 or n == 0:
+            return 0
+        if self._s[m - 1] == self._s[n - 1] and m != n:
+            return 1 + self.lrs_recursive(m - 1, n - 1)
+        return max(self.lrs_recursive(m, n - 1), self.lrs_recursive(m - 1, n))
+
+    def lrs_dp(self):
+        for row in range(1, self._len + 1):
+            for col in range(1, self._len + 1):
+                if self._s[row - 1] == self._s[col - 1] and row != col:
+                    self._grid[row][col] = 1 + self._grid[row - 1][col - 1]
+                else:
+                    self._grid[row][col] = max(self._grid[row - 1][col], self._grid[row][col - 1])
+        return self._grid[self._len][self._len]
+
+
 if __name__ == '__main__':
     # k = MaxArraySumNonAdjacent([-2, 1, 3, -4, 5])
     # print(k.max_array_sum_non_adjacent())
@@ -137,5 +168,7 @@ if __name__ == '__main__':
     # print(c.min_rewards())
     # k = LongestCommonPalindromicSubsequence('bebeeed')
     # print(k.lcps())
-    o = EditDistance()
-    print(o.edit_distance_dp('Anshuman', 'Antihuman'))
+    # o = EditDistance()
+    # print(o.edit_distance_dp('Anshuman', 'Antihuman'))
+    c = LongestRepeatingSubsequence('abba')
+    print(c.lrs_dp())
