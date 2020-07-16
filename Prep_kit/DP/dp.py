@@ -136,7 +136,6 @@ class LongestRepeatingSubsequence:
     compare a string with its substring and find any recurrence of the same substring.
     `If the character match, we pick element diagonally above and add 1
     otherwise we pick the max from the element at top or left`
-    
     """
     def __init__(self, string):
         self._s = string
