@@ -159,6 +159,31 @@ class LongestRepeatingSubsequence:
         return self._grid[self._len][self._len]
 
 
+class DistinctSubsequences:
+    """
+
+    """
+    def __init__(self, string, subseq):
+        self._string = string
+        self._subseq = subseq
+        self._grid = [[0 for _ in range(len(self._string) + 1)] for _ in range(len(self._subseq) + 1)]
+        self._mem = {}
+
+    def _init_fill_grid(self):
+        for i in range(len(self._string) + 1):
+            self._grid[0][i] = 1
+
+    def distinct_subseq_dp(self):
+        self._init_fill_grid()
+        for row in range(1, len(self._subseq) + 1):
+            for col in range(1, len(self._string) + 1):
+                if self._subseq[row - 1] == self._string[col - 1]:
+                    self._grid[row][col] = self._grid[row][col - 1] + self._grid[row - 1][col - 1]
+                else:
+                    self._grid[row][col] = self._grid[row][col - 1]
+        return self._grid[len(self._subseq)][len(self._string)]
+
+
 if __name__ == '__main__':
     # k = MaxArraySumNonAdjacent([-2, 1, 3, -4, 5])
     # print(k.max_array_sum_non_adjacent())
@@ -169,5 +194,7 @@ if __name__ == '__main__':
     # print(k.lcps())
     # o = EditDistance()
     # print(o.edit_distance_dp('Anshuman', 'Antihuman'))
-    c = LongestRepeatingSubsequence('abba')
-    print(c.lrs_dp())
+    # c = LongestRepeatingSubsequence('abba')
+    # print(c.lrs_dp())
+    s = DistinctSubsequences('rabbbit', 'rabbit')
+    print(s.distinct_subseq_dp())
