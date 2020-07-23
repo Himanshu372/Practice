@@ -673,6 +673,48 @@ class MinCoins():
         return -1 if self._dp[self._target] >= sys.maxsize else self._dp[self._target]
 
 
+def palin_sol(n, s):
+    '''
+    Hackerearth problem to find longest palindromic substring for each prefix of given string s
+    For eg,
+    s = 'ababa'
+    for 'a' - length = 1
+        'ab' - length = 1 (As 'ab' is not a palindrome)
+        'aba' - length = 3
+        etc
+    '''
+
+    res = {}
+    res[1] = 1
+    for i in range(2, n + 1):
+        if s[:i] == s[:i][::-1]:
+            res[i] = i
+        else:
+            res[i] = res[i - 1]
+    return ' '.join(str(i) for i in res.values())
+
+def Hack_sol (s1, s2, c, l):
+    '''
+    Hackerearth problem, where in we have to find occurence index of s2 in s1
+    And if given c == 'Y', then index >= l and s2 has to be an independent word
+    else if given c == 'N', then index >= l and no other condition is required
+    '''
+    # Write your code here
+    indexes = [i.start() for i in re.finditer(s2, s1)]
+    for ind in indexes:
+        if ind >= l:
+            if c == 'Y':
+                if s1[ind - 1] == ' ' and s1[len(s2) + ind] == ' ':
+                    return ind
+                elif ind == 0:
+                    return ind
+                elif s1[ind - 1] == ' ' and len(s1) == ind + len(s2):
+                    return ind
+            elif c == 'N':
+                return ind
+    else:
+        return 'Goodbye Watson.'
+
 if __name__=='__main__':
     # print_pattern(4)
     # print_odd_even(3)
