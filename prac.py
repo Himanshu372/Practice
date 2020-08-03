@@ -715,6 +715,20 @@ def Hack_sol (s1, s2, c, l):
     else:
         return 'Goodbye Watson.'
 
+
+def check(f):
+    def checking(self):
+        print('Before secret method')
+        f()
+        print('After secret method')
+    return checking
+
+class A:
+    @check
+    def secret(self):
+        print('Welcome to secret method')
+
+
 if __name__=='__main__':
     # print_pattern(4)
     # print_odd_even(3)
@@ -722,5 +736,7 @@ if __name__=='__main__':
     # reverseshufflemerge('abcdefgabcdefg')
     # print(commonChild_memoized('SHINCHAN', 'NOHARAAA'))
     # print(get_odd_subarrays([2, 2, 5, 6, 9, 11, 4, 2], 2))
-    k = MinCoins([2], 3)
-    print(k.min_coins_dp())
+    # k = MinCoins([2], 3)
+    # print(k.min_coins_dp())
+    a = A()
+    a.secret()
