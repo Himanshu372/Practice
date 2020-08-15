@@ -306,6 +306,12 @@ class CheckScrambledString:
                 /\
                a  t
         Swapping 'gr' and 'eat', we get to 'rgate'
+
+    Idea for the solution to check at each i(1, n-1) after dividing the string using i,
+        If the string is not swapped, are both front and end scrambled version of each other =>
+            (check_scramble('g', 'r') and check_scramble('reat', 'gate'))
+         or
+        If the string is swapped => (check_scramble('g', 'e') and check_scramble('reat', 'rgat'))
     """
     def __init__(self, string, scrambled):
         self.string = string

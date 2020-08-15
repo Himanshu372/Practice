@@ -728,6 +728,49 @@ class A:
     def secret(self):
         print('Welcome to secret method')
 
+def form_triplets(l, total):
+    l = sorted(l)
+    triplets = []
+    for ind in range(len(l) - 2):
+        left, right = ind + 1, len(l) - 1
+        while left != right:
+            s = l[ind], l[left], l[right]
+            k = sum(s)
+            if k <= total:
+                if k == total:
+                    triplets.append(s)
+                left += 1
+            elif k > total:
+                right -= 1
+    return triplets
+
+import os
+import re
+
+def check_keywords(loc, keywords):
+    return_files = {}
+    for file in os.listdir(loc):
+        with open('bigquery/' + file) as f:
+            string = f.read()
+            tokens = re.findall(r'\b\w+\b', string)
+            if words_list := [word for word in keywords if word in tokens]:
+                return_files[file] = words_list
+    with open('Analysis_doc.txt', 'w+') as f:
+        f.write('\n'.join((file + ' => ' + str(words_list)) for file, words_list in return_files.items()))
+    return 'Done'
+
+
+def cuc_seq(input1):
+    d = {}
+    d[1], d[2] = 0, 1
+    if input1 in [1, 2]:
+        return d[input1]
+    result = 0
+    for i in range(1, input1 + 1):
+        if d.get(i) is None:
+            d[i] = 1 * d[i - 1] + 2 * d[i - 2] + 3 * 1
+    return d[input1]
+
 
 if __name__=='__main__':
     # print_pattern(4)
@@ -737,6 +780,6 @@ if __name__=='__main__':
     # print(commonChild_memoized('SHINCHAN', 'NOHARAAA'))
     # print(get_odd_subarrays([2, 2, 5, 6, 9, 11, 4, 2], 2))
     # k = MinCoins([2], 3)
-    # print(k.min_coins_dp())
-    a = A()
-    a.secret()
+    # print(k.min_coins_dp()
+    # print(form_triplets([1, 2, 3, 4, 5, 6, 7], 12))
+    print(cuc_seq(3))
