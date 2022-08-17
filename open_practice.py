@@ -9,7 +9,7 @@ from fractions import Fraction
 from itertools import combinations
 from operator import itemgetter
 import gzip
-from subprocess import PIPE,Popen
+from subprocess import PIPE, Popen
 import string
 # import pandas as pd
 import sys
@@ -33,6 +33,7 @@ def countingValleys(n, s):
             valley += 1
     return valley
 
+
 # Implementating Linked List
 class Node():
     """docstring for Node"""
@@ -40,6 +41,7 @@ class Node():
     def __init__(self, data=None):
         self.data = data
         self.next = None
+
 
 class linked_list():
     """docstring for Linked_list"""
@@ -71,7 +73,6 @@ class linked_list():
             l.append(curr.data)
         print(l)
 
-
     def get(self, index):
         curr = self.head
         count = 0
@@ -82,8 +83,10 @@ class linked_list():
             count += 1
         return print('Index out of range')
 
+
 class bts_node(object):
     """docstring for bts_node"""
+
     def __init__(self, value=None):
         super(bts_node, self).__init__()
         self.value = value
@@ -91,12 +94,13 @@ class bts_node(object):
         self.right = None
         self.parent = None
 
+
 class binary_tree(object):
     """docstring for binary_tree"""
+
     def __init__(self):
         super(binary_tree, self).__init__()
         self.root = None
-
 
     def insert(self, value):
         if self.root is None:
@@ -125,7 +129,7 @@ class binary_tree(object):
             k = self._display(self.root, 1)
             return k
 
-    def _display(self, node, level, l = []):
+    def _display(self, node, level, l=[]):
         if node != None:
             self._display(node.left, level + 1, l)
             # print(node.value)
@@ -163,7 +167,6 @@ class binary_tree(object):
         else:
             return False
 
-
     def find_node(self, value):
         if self.root != None:
             return self._find_node(value, self.root)
@@ -186,17 +189,14 @@ class binary_tree(object):
         if node.right != None: children += 1
         return children
 
-
     def min_node(self, node):
         curr = node
         while curr.left != None:
             curr = curr.left
         return curr
 
-
     def delete(self, value):
         return self._delete(self.find_node(value))
-
 
     def _delete(self, node):
         parent = node.parent
@@ -223,17 +223,12 @@ class binary_tree(object):
             node.value = min_child.value
             self.delete(min_child)
 
-
-
-
     # def delete(self, value):
     #
     #
     #
     # def _delete(self, value, node):
     #     return
-
-
 
 
 def populate_tree(tree):
@@ -247,10 +242,12 @@ def populate_tree(tree):
     return tree
 
 
-def validate_bst(root, min = -sys.maxsize, max = sys.maxsize):
+def validate_bst(root, min=-sys.maxsize, max=sys.maxsize):
     if root == None:
         return True
-    if root.value > min and root.value < max and validate_bst(root.left, min = -sys.maxsize, max = root.value) and validate_bst(root.right, min = root.value, max = sys.maxsize):
+    if root.value > min and root.value < max and validate_bst(
+            root.left, min=-sys.maxsize, max=root.value) and validate_bst(
+                root.right, min=root.value, max=sys.maxsize):
         return True
     else:
         return False
@@ -264,6 +261,7 @@ def invert_tree(t):
         return t
     else:
         return 'Tree is empty'
+
 
 def invert_node(node):
     if node == None:
@@ -288,6 +286,7 @@ def invert_node(node):
 # Implementating graphs
 # Graph with adjaceny list
 class Vertex(object):
+
     def __init__(self, name):
         self.name = name
         self.neighbours = []
@@ -300,14 +299,14 @@ class Vertex(object):
             self.neighbours.sort()
 
 
-
-
 class Graph():
+
     def __init__(self):
         self.vertices = {}
 
     def add_vertex(self, vertex):
-        if isinstance(vertex, Vertex) and vertex.name not in self.vertices.keys():
+        if isinstance(vertex,
+                      Vertex) and vertex.name not in self.vertices.keys():
             self.vertices[vertex.name] = vertex
         else:
             print('Vertex already in the graph')
@@ -348,13 +347,9 @@ class Graph():
 
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print(key + ':' + ''.join(self.vertices[key].neighbours) + ' Distance from source(A):' + str(self.vertices[key].distance))
-
-
-
-
-
-
+            print(key + ':' + ''.join(self.vertices[key].neighbours) +
+                  ' Distance from source(A):' +
+                  str(self.vertices[key].distance))
 
 
 # Graph with adjaceny matrix
@@ -395,9 +390,9 @@ class Graph():
 #             print('')
 
 
-
 # Implementating Depth First Search
 class Vertex(object):
+
     def __init__(self, name):
         self.name = name
         self.color = 'black'
@@ -411,15 +406,15 @@ class Vertex(object):
             sorted(self.neighbours)
 
 
-
 class Graph(object):
+
     def __init__(self):
         self.vertices = {}
         time = 0
 
-
     def add_vertex(self, vertex):
-        if isinstance(vertex, Vertex) and vertex.name not in self.vertices.keys():
+        if isinstance(vertex,
+                      Vertex) and vertex.name not in self.vertices.keys():
             self.vertices[vertex.name] = vertex
         else:
             print('Vertex already in the graph')
@@ -454,15 +449,15 @@ class Graph(object):
         node_v.finish = time + 1
         time += 1
 
-
     def print_graph(self):
         for key in sorted(list(self.vertices.keys())):
-            print(key + ':' + ''.join(self.vertices[key].neighbours) + ' Discovery_time:' + str(self.vertices[key].discovery) + ' Finish_time:' + str(self.vertices[key].finish))
-
-
+            print(key + ':' + ''.join(self.vertices[key].neighbours) +
+                  ' Discovery_time:' + str(self.vertices[key].discovery) +
+                  ' Finish_time:' + str(self.vertices[key].finish))
 
 
 class Stack(object):
+
     def __init__(self):
         self.list = []
 
@@ -479,14 +474,15 @@ class Stack(object):
 
 
 class Queue(object):
+
     def __init__(self):
         self.entryStack = Stack()
         self.exitStack = Stack()
 
-
     def enqueue(self, element):
         self.entryStack.push(element)
         return None
+
     def dequeue(self):
         if len(self.exitStack) != 0:
             element = self.exitStack.pop()
@@ -543,19 +539,17 @@ class patternMatchingAlgo(object):
                 k = self.m - 1
         return -1
 
-
     def _gen_dict(self):
-       """
+        """
        An internal method to convert given string to dict
        :return: 
        """
-       return {self.substring[i]: i for i in range(self.m)}
+        return {self.substring[i]: i for i in range(self.m)}
 
 
+if __name__ == '__main__':
+    max_subarray_sum_kadane([-2, -3, 4, -1, -2, 1, 5, -3], false)
 
-
-
-if __name__=='__main__':
     # obj = patternMatchingAlgo('Himanshu', 'man')
     # print(obj.boyer_moore_match())
     # print('Start')
@@ -625,7 +619,6 @@ if __name__=='__main__':
     #
     # print(solve([9, 10, 5, 12, 1], [5, 2, 9, 3, 1], 1, 5))
 
-
     # print(countingValleys(8, 'UDDDUDUU'))
 
     # from sys import stdin
@@ -653,10 +646,6 @@ if __name__=='__main__':
     #     if int(line) % k == 0:
     #         cnt += 1
 
-
-
-
-
     # Hackerearth code monk palindrome problem
     # lines = ['3', 'abc', 'abba', 'aba']
     # n = int(lines[0])
@@ -668,7 +657,6 @@ if __name__=='__main__':
     #         print('YES EVEN')
     #     else:
     #         print('Issue')
-
 
     #
     # m = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
@@ -702,7 +690,6 @@ if __name__=='__main__':
     #         else:
     #             print(med + 1)
     #             break
-
 
     # k = 6
     # m = 8
@@ -793,6 +780,7 @@ if __name__=='__main__':
     #             l[j] = temp
     # print(' '.join(str(l.index(k)) for k in o))
 
+
     def insertion_sort(l):
         for i in range(len(l)):
             for j in range(i, 0, -1):
@@ -864,8 +852,6 @@ if __name__=='__main__':
     #         elif aux[ind] == 1:
     #             sorted.append(ind)
     #     print(sorted)
-
-
 
     # count_sort(l)
 
@@ -961,13 +947,8 @@ if __name__=='__main__':
     #
     # print(radix_sort_python([719, 23, 81]))
 
-
-
-
     # l = [170, 45, 90, 70, 2]
     # print(radix_sort(l))
-
-
 
     # Batman code
     # import sys
@@ -1067,7 +1048,6 @@ if __name__=='__main__':
     #                 break
     #     break
 
-
     # def rm_even(s):
     #     to_join = []
     #     for _, g in groupby(s):
@@ -1126,7 +1106,6 @@ if __name__=='__main__':
     # for each in bucket_sort(l):
     #     print(' '.join(str(i) for i in each))
 
-
     # def max_bottles_greedy(l, cap):
     #     l = sorted(l)
     #     j = 0
@@ -1146,8 +1125,6 @@ if __name__=='__main__':
     #     p = [x for x,v in k.items() if v == m]
     #     return min(p)
     # l = [1, 1, 2, 2, 3]
-
-
 
     # def sockMerchant(n, ar):
     #     p = Counter(ar)
@@ -1226,9 +1203,6 @@ if __name__=='__main__':
     #
     # database_backup('mopdevdb.cxq6ek6k9vz7.ap-south-1.rds.amazonaws.com', 'mopdevdb','mop_dev_user', 'sch_mopdev','mopdevmaster')
 
-
-
-
     # for i in range(3):
     #     for j in list(string.ascii_uppercase):
     #         if i == 0:
@@ -1238,7 +1212,6 @@ if __name__=='__main__':
     #         if i == 2:
     #             print('context.{}{}=row1.{}{}'.format('B', j, 'B', j))
 
-
     # Code for testing linked_list class
     # n = linked_list()
     # n.append(1)
@@ -1247,11 +1220,9 @@ if __name__=='__main__':
     # k = n.get(1)
     # print(k)
 
-
     # Simple code for Caesar's cipher
     # def caesar(string, rotate_by):
     #     pass
-
 
     # Palindrome check for string
     # def palindrome_string(s):
@@ -1272,8 +1243,6 @@ if __name__=='__main__':
     #     #
     #     #
     #     # palindrome_number(6446)
-
-
 
     # Max sum of not adjacent elements
 
@@ -1332,7 +1301,6 @@ if __name__=='__main__':
     # print(end2 - start2)
     # print(coins)
     # print(coins_dp)
-
 
     # Levenshtein distance(DP approach)
     # Repr distance between 2 strings, count of edits(insertion, deletions or substitutions) required to convert one to other
@@ -1452,7 +1420,6 @@ if __name__=='__main__':
     #
     # print(Find_It(3, 3, '123456789', 9))
 
-
     # def solution(n):
     #     # Write your code here
     #     pairs = []
@@ -1466,7 +1433,6 @@ if __name__=='__main__':
     # print(solution(50))
 
     # Complete the countInversions function below.
-
 
     # Implementing merge sort to return swaps required.
 
@@ -1505,7 +1471,6 @@ if __name__=='__main__':
     # ms = MS()
     # print(ms.countInversions([2, 1, 3, 1, 2]))
     # print(ms.swaps)
-
 
     # def maximumToys(prices, k):
     #     toys_list = []
@@ -1590,7 +1555,6 @@ if __name__=='__main__':
     #
     # print(solve('abcdefgabcdefg'))
 
-
     # def primes(n):
     #     l = []
     #     for i in range(4, n):
@@ -1616,7 +1580,6 @@ if __name__=='__main__':
     #
     # print(intersection([1,2,2,3], [2, 2, 3, 4]))
 
-
     # def largest_substring(s):
     #     l = 0
     #     max_str_len = 0
@@ -1635,7 +1598,6 @@ if __name__=='__main__':
     #
     # print(largest_substring('azcbobobegghakl'))
 
-
     # def closest_to_zero(l):
     #     neg, pos = [], []
     #     min_score = sys.maxsize
@@ -1653,7 +1615,6 @@ if __name__=='__main__':
     #     return x , y
     #
     # print(closest_to_zero([15, 5, -20, 30, -45]))
-
 
     # An implementation on the lines of DFS(Depth First Search)
     def search_islands(m):
@@ -1678,8 +1639,9 @@ if __name__=='__main__':
                 if i != row or j != col:
                     find_adjacent(m, i, j)
 
-    print('Islands:' + str(search_islands([[0, 1, 0, 1, 1], [0, 0, 0, 1, 1], [0, 0, 0, 1, 0], [1, 0, 0, 0, 1]])))
-
+    print('Islands:' + str(
+        search_islands([[0, 1, 0, 1, 1], [0, 0, 0, 1, 1], [0, 0, 0, 1, 0],
+                        [1, 0, 0, 0, 1]])))
 
     # def makeAnagram(a, b):
     #     common_string = list(set(a + b))
@@ -1717,9 +1679,9 @@ if __name__=='__main__':
     #
     # print(isValid('ibfdgaeadiaefgbhbdghhhbgdfgeiccbiehhfcggchgghadhdhagfbahhddgghbdehidbibaeaagaeeigffcebfbaieggabcfbiiedcabfihchdfabifahcbhagccbdfifhghcadfiadeeaheeddddiecaicbgigccageicehfdhdgafaddhffadigfhhcaedcedecafeacbdacgfgfeeibgaiffdehigebhhehiaahfidibccdcdagifgaihacihadecgifihbebffebdfbchbgigeccahgihbcbcaggebaaafgfedbfgagfediddghdgbgehhhifhgcedechahidcbchebheihaadbbbiaiccededchdagfhccfdefigfibifabeiaccghcegfbcghaefifbachebaacbhbfgfddeceababbacgffbagidebeadfihaefefegbghgddbbgddeehgfbhafbccidebgehifafgbghafacgfdccgifdcbbbidfifhdaibgigebigaedeaaiadegfefbhacgddhchgcbgcaeaieiegiffchbgbebgbehbbfcebciiagacaiechdigbgbghefcahgbhfibhedaeeiffebdiabcifgccdefabccdghehfibfiifdaicfedagahhdcbhbicdgibgcedieihcichadgchgbdcdagaihebbabhibcihicadgadfcihdheefbhffiageddhgahaidfdhhdbgciiaciegchiiebfbcbhaeagccfhbfhaddagnfieihghfbaggiffbbfbecgaiiidccdceadbbdfgigibgcgchafccdchgifdeieicbaididhfcfdedbhaadedfageigfdehgcdaecaebebebfcieaecfagfdieaefdiedbcadchabhebgehiidfcgahcdhcdhgchhiiheffiifeegcfdgbdeffhgeghdfhbfbifgidcafbfcd'))
 
+
     def triangular_number(n):
         return (pow(n, 2) + n) // 2
-
 
     def substrCount(n, s):
         # no_of_substr = n
@@ -1802,7 +1764,6 @@ if __name__=='__main__':
     #
     # print(fibonacci_varint(100))
 
-
     def fib_series(number):
         """
         Fib series for sum till n
@@ -1836,10 +1797,9 @@ if __name__=='__main__':
     print(subset_sum_problem([3, 5, 2, -4, 8, 11], 7))
     print(timeit.timeit() - start_time)
 
-
     def max_subarray_sum(array):
         """
-        No a good approach, time complexity is O(N^2)
+        Not a good approach, time complexity is O(N^2)
         :param array:
         :return:
         """
@@ -1850,23 +1810,6 @@ if __name__=='__main__':
                 if sum(a) > max_sum:
                     max_sum = sum(array[j:j + i])
         return max_sum
-
-
-    def max_subarray_sum_kadane(array):
-        """
-        Implementation of Kadane's algo for an array, idea is to find at each index,
-        maximum sum of contiguous subarray, with adding the element at the index with the
-        sum of trailing subarray
-        :param array:
-        :return:
-        """
-        max_sum = current_sum = array[0]
-        for i in range(1, len(array)):
-            current_sum = max(array[i], current_sum + array[i])
-            if max_sum < current_sum:
-                max_sum = current_sum
-        return max_sum
-
 
     def longest_subsequence(array):
         """
@@ -1881,12 +1824,13 @@ if __name__=='__main__':
         max_length_array = [1] * len(array)
         for i in range(1, len(array)):
             for j in range(i):
-                if (array[j] < array[i]) and (max_length_array[i] < (max_length_array[j] + 1)):
+                if (array[j] < array[i]) and (max_length_array[i] <
+                                              (max_length_array[j] + 1)):
                     max_length_array[i] = max_length_array[j] + 1
         return max(max_length_array)
 
-
     array = [-1] * 10
+
     def get_min_steps(n):
         """
         A technique to find minimum steps which can result in a number `n` being 1.
@@ -1911,7 +1855,6 @@ if __name__=='__main__':
         array[n - 1] = r
         return r
 
-
     def get_min_steps_dp(num):
         """
         This is the same problem as above but solved by bottom up DP approach
@@ -1927,71 +1870,3 @@ if __name__=='__main__':
             if i % 3 == 0:
                 array[i - 1] = min(array[i - 1], 1 + array[(i // 3) - 1])
         return array[num - 1]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
